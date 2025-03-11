@@ -1,30 +1,29 @@
 package mate.academy.bookstore.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.model.Book;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-
     private final EntityManager entityManager;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Book save(Book book) {
         try {
             if (book.getId() == null) {
                 entityManager.persist(book);
-                return book;
             } else {
-                return entityManager.merge(book);
+                book = entityManager.merge(book);
             }
+            return book;
         } catch (Exception e) {
-            throw new RuntimeException("Error saving book", e);
+            throw new RuntimeException("Error saving book: " + book, e);
         }
     }
 
