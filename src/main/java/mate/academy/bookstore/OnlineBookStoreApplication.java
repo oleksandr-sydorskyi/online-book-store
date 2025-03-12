@@ -23,9 +23,15 @@ public class OnlineBookStoreApplication {
     @Bean
     public CommandLineRunner init() {
         return args -> {
-            bookService.save(new Book(null, "Book Title",
-                    "Author", "123456789", new BigDecimal("29.99"),
-                    "Description", "cover.jpg"));
+            Book book = new Book();
+            book.setTitle("Book Title");
+            book.setAuthor("Author");
+            book.setIsbn("1234567");
+            book.setPrice(new BigDecimal("29.99"));
+            book.setDescription("Description");
+            book.setCoverImage("cover.jpg");
+
+            bookService.save(book);
             bookService.findAll().forEach(System.out::println);
         };
     }
