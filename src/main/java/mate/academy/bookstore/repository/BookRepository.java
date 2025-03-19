@@ -11,7 +11,5 @@ public interface BookRepository {
     List<Book> getAllBooks();
 
     Optional<Book> getBookById(Long id);
-
-    List<Book> getAllBooksByAuthor(String author);
 }
 

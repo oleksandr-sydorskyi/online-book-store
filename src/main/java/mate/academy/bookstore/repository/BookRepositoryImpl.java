@@ -40,15 +40,6 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
-    private Book getBookByIsbn(EntityManager manager, String isbn) {
-        return manager
-                .createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
-                .setParameter("isbn", isbn)
-                .getResultStream()
-                .findFirst()
-                .orElse(null);
-    }
-
     @Override
     public List<Book> getAllBooks() {
         try (EntityManager manager = factory.createEntityManager()) {
@@ -68,14 +59,12 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
-    @Override
-    public List<Book> getAllBooksByAuthor(String author) {
-        String lowerCaseAuthor = author.toLowerCase();
-        try (EntityManager manager = factory.createEntityManager()) {
-            String query = "SELECT b FROM Book b WHERE lower(b.author) LIKE :author";
-            return manager.createQuery(query, Book.class)
-                    .setParameter("author", "%" + lowerCaseAuthor + "%")
-                    .getResultList();
-        }
+    private Book getBookByIsbn(EntityManager manager, String isbn) {
+        return manager
+                .createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
+                .setParameter("isbn", isbn)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 }
