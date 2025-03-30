@@ -33,7 +33,7 @@ public class CustomGlobalExceptionHandler {
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Map<String, Object>> handleRegistrationException(
             RegistrationException ex) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     private ResponseEntity<Map<String, Object>> buildErrorResponse(
