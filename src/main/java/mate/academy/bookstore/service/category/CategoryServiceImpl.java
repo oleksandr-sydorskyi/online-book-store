@@ -1,7 +1,6 @@
 package mate.academy.bookstore.service.category;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.category.CategoryDto;
 import mate.academy.bookstore.dto.category.CreateCategoryRequestDto;
@@ -20,9 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> findAll(Pageable pageable) {
-        return categoryRepository.findAll().stream()
+        return categoryRepository.findAll(pageable).stream()
                 .map(categoryMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
