@@ -21,7 +21,6 @@ public class CreateBookRequestDto {
     @NotNull
     @Min(0)
     private BigDecimal price;
-
     private String description;
     private String coverImage;
     private List<Long> categoryIds;
