@@ -1,6 +1,5 @@
 package mate.academy.bookstore.mapper;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import mate.academy.bookstore.config.MapperConfig;
@@ -16,8 +15,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -57,10 +54,8 @@ public interface BookMapper {
     }
 
     @Named("bookFromId")
-    default Book bookFromId(Long id, @Autowired ApplicationContext applicationContext) {
-        BookRepository bookRepository = applicationContext.getBean(BookRepository.class);
-        Optional<Book> bookOptional = bookRepository.findById(id);
-        return bookOptional.orElseThrow(
-                () -> new EntityNotFoundException("Book with id " + id + " not found"));
+    default Book bookFromId(Long id, BookRepository bookRepository) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id " + id + " not found"));
     }
 }
