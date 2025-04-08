@@ -56,6 +56,7 @@ public interface BookMapper {
     @Named("bookFromId")
     default Book bookFromId(Long id, BookRepository bookRepository) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Book with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Book with id " + id + " not found"));
     }
 }
