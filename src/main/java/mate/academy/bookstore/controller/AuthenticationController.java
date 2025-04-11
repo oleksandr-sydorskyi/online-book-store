@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.UserLoginRequestDto;
 import mate.academy.bookstore.dto.UserLoginResponseDto;
 import mate.academy.bookstore.dto.UserRegistrationRequestDto;
-import mate.academy.bookstore.dto.UserResponseDto;
 import mate.academy.bookstore.exception.RegistrationException;
 import mate.academy.bookstore.security.AuthenticationService;
 import mate.academy.bookstore.service.UserService;
@@ -37,7 +36,7 @@ public class AuthenticationController {
     @Operation(summary = "User registration",
             description = "Registers a new client in the system with the provided details.")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto)
+    public UserLoginResponseDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);
     }
