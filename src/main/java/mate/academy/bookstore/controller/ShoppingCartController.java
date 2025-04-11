@@ -4,9 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstore.dto.AddToCartRequestDto;
-import mate.academy.bookstore.dto.ShoppingCartDto;
-import mate.academy.bookstore.dto.UpdateCartItemRequestDto;
+import mate.academy.bookstore.dto.cart.CartItemRequestDto;
+import mate.academy.bookstore.dto.cart.CartItemResponseDto;
+import mate.academy.bookstore.dto.cart.CreateCartItemDto;
+import mate.academy.bookstore.dto.cart.ShoppingCartDto;
 import mate.academy.bookstore.service.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Shopping Cart Management", description = "Endpoints for managing user's shopping cart")
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/cart")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ROLE_USER')")
 public class ShoppingCartController {
@@ -36,15 +37,16 @@ public class ShoppingCartController {
 
     @Operation(summary = "Add a book to the shopping cart")
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ShoppingCartDto addBookToShoppingCart(
-            @RequestBody @Valid AddToCartRequestDto requestDto) {
+            @RequestBody @Valid CreateCartItemDto requestDto) {
         return shoppingCartService.addBookToShoppingCart(requestDto);
     }
 
     @Operation(summary = "Update quantity of a book in the shopping cart")
     @PutMapping("/items/{cartItemId}")
-    public ShoppingCartDto updateQuantity(@PathVariable Long cartItemId,
-                                          @RequestBody @Valid UpdateCartItemRequestDto requestDto) {
+    public CartItemResponseDto updateQuantity(@PathVariable Long cartItemId,
+                                              @RequestBody @Valid CartItemRequestDto requestDto) {
         return shoppingCartService.updateQuantity(cartItemId, requestDto);
     }
 

@@ -13,6 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
     Page<Book> findByCategoriesId(Long categoryId, Pageable pageable);
 
     @EntityGraph(attributePaths = "categories")
-    @Override
     Optional<Book> findById(Long id);
 }
