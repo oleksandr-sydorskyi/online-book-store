@@ -1,11 +1,11 @@
 package mate.academy.bookstore.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.cart.CreateCartItemDto;
 import mate.academy.bookstore.dto.cart.ShoppingCartDto;
 import mate.academy.bookstore.dto.cart.UpdateCartItemDto;
+import mate.academy.bookstore.exception.EntityNotFoundException;
 import mate.academy.bookstore.mapper.ShoppingCartMapper;
 import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.model.CartItem;
