@@ -3,10 +3,9 @@ package mate.academy.bookstore.service;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstore.dto.cart.CartItemRequestDto;
-import mate.academy.bookstore.dto.cart.CartItemResponseDto;
 import mate.academy.bookstore.dto.cart.CreateCartItemDto;
 import mate.academy.bookstore.dto.cart.ShoppingCartDto;
+import mate.academy.bookstore.dto.cart.UpdateCartItemDto;
 import mate.academy.bookstore.mapper.ShoppingCartMapper;
 import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.model.CartItem;
@@ -63,14 +62,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public CartItemResponseDto updateQuantity(Long cartItemId, CartItemRequestDto requestDto) {
+    public ShoppingCartDto updateQuantity(Long cartItemId, UpdateCartItemDto requestDto) {
         Long userId = getCurrentUserId();
         CartItem cartItem = shoppingCartRepository.cartItemsByUserIdAndItemId(userId, cartItemId)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find cart item with id: "
                         + cartItemId + " in your cart"));
         cartItem.setQuantity(requestDto.quantity());
         cartItemRepository.save(cartItem);
-        return shoppingCartMapper.toCartItemDto(cartItem);
+        ShoppingCart shoppingCart = cartItem.getShoppingCart();
+        return shoppingCartMapper.toShoppingCartDto(shoppingCart);
     }
 
     @Override

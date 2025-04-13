@@ -1,7 +1,7 @@
 package mate.academy.bookstore.mapper;
 
 import mate.academy.bookstore.config.MapperConfig;
-import mate.academy.bookstore.dto.cart.CartItemResponseDto;
+import mate.academy.bookstore.dto.cart.CartItemDto;
 import mate.academy.bookstore.dto.cart.CreateCartItemDto;
 import mate.academy.bookstore.dto.cart.ShoppingCartDto;
 import mate.academy.bookstore.model.CartItem;
@@ -17,7 +17,7 @@ public interface ShoppingCartMapper {
 
     @Mapping(target = "bookId", source = "book.id")
     @Mapping(target = "bookTitle", source = "book.title")
-    CartItemResponseDto toCartItemDto(CartItem cartItem);
+    CartItemDto toCartItemDto(CartItem cartItem);
 
     @Mapping(target = "book", source = "bookId", qualifiedByName = "bookFromId")
     CartItem toModel(CreateCartItemDto requestDto);

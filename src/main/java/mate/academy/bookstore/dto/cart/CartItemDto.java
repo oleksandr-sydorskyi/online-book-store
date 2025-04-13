@@ -1,6 +1,6 @@
 package mate.academy.bookstore.dto.cart;
 
-public record CartItemResponseDto(
+public record CartItemDto(
         Long id,
         Long bookId,
         String bookTitle,
