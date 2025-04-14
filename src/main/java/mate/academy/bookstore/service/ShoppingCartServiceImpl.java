@@ -64,7 +64,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartDto updateQuantity(Long cartItemId, UpdateCartItemDto requestDto) {
         Long userId = getCurrentUserId();
-        CartItem cartItem = shoppingCartRepository.cartItemsByUserIdAndItemId(userId, cartItemId)
+        CartItem cartItem = shoppingCartRepository
+                .findCartItemByUserIdAndCartItemId(userId, cartItemId)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find cart item with id: "
                         + cartItemId + " in your cart"));
         cartItem.setQuantity(requestDto.quantity());
@@ -76,15 +77,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void removeBookFromShoppingCart(Long cartItemId) {
         Long userId = getCurrentUserId();
-        Optional<CartItem> cartItem = shoppingCartRepository
-                .cartItemsByUserIdAndItemId(userId, cartItemId);
-        if (cartItem.isPresent()) {
-            CartItem item = cartItem.get();
-            cartItemRepository.delete(item);
-        } else {
-            throw new EntityNotFoundException("Can't find cart item with id: "
-                    + cartItemId + " in your cart");
-        }
+        CartItem cartItem = shoppingCartRepository
+                .findCartItemByUserIdAndCartItemId(userId, cartItemId)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find cart item with id: "
+                        + cartItemId + " in your cart"));
+        cartItemRepository.delete(cartItem);
     }
 
     @Override
