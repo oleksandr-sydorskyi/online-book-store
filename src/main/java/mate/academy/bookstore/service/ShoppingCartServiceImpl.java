@@ -64,10 +64,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartDto updateQuantity(Long cartItemId, UpdateCartItemDto requestDto) {
         Long userId = getCurrentUserId();
-        CartItem cartItem = shoppingCartRepository
+        CartItem cartItem = cartItemRepository
                 .findCartItemByUserIdAndCartItemId(userId, cartItemId)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find cart item with id: "
-                        + cartItemId + " in your cart"));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(
+                        "Can't find cart item with id: %d in your cart", cartItemId)));
         cartItem.setQuantity(requestDto.quantity());
         cartItemRepository.save(cartItem);
         ShoppingCart shoppingCart = cartItem.getShoppingCart();
@@ -77,7 +77,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void removeBookFromShoppingCart(Long cartItemId) {
         Long userId = getCurrentUserId();
-        CartItem cartItem = shoppingCartRepository
+        CartItem cartItem = cartItemRepository
                 .findCartItemByUserIdAndCartItemId(userId, cartItemId)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find cart item with id: "
                         + cartItemId + " in your cart"));
