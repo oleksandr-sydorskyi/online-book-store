@@ -6,13 +6,13 @@ import mate.academy.bookstore.dto.cart.UpdateCartItemDto;
 import mate.academy.bookstore.model.User;
 
 public interface ShoppingCartService {
-    ShoppingCartDto getShoppingCart();
+    ShoppingCartDto getShoppingCart(Long userId);
 
-    ShoppingCartDto addBookToShoppingCart(CreateCartItemDto requestDto);
+    ShoppingCartDto addBookToShoppingCart(Long userId, CreateCartItemDto requestDto);
 
-    ShoppingCartDto updateQuantity(Long cartItemId, UpdateCartItemDto requestDto);
+    ShoppingCartDto updateQuantity(Long userId, Long cartItemId, UpdateCartItemDto requestDto);
 
-    void removeBookFromShoppingCart(Long cartItemId);
+    void removeBookFromShoppingCart(Long userId, Long cartItemId);
 
     void createNewShoppingCart(User user);
 }
