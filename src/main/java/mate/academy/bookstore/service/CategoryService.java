@@ -1,4 +1,4 @@
-package mate.academy.bookstore.service.category;
+package mate.academy.bookstore.service;
 
 import mate.academy.bookstore.dto.category.CategoryDto;
 import mate.academy.bookstore.dto.category.CreateCategoryRequestDto;

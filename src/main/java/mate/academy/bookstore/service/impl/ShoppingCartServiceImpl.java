@@ -1,4 +1,4 @@
-package mate.academy.bookstore.service;
+package mate.academy.bookstore.service.impl;
 
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import mate.academy.bookstore.model.User;
 import mate.academy.bookstore.repository.book.BookRepository;
 import mate.academy.bookstore.repository.cart.CartItemRepository;
 import mate.academy.bookstore.repository.cart.ShoppingCartRepository;
+import mate.academy.bookstore.service.ShoppingCartService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
