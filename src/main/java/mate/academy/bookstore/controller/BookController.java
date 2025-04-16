@@ -3,11 +3,10 @@ package mate.academy.bookstore.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstore.dto.BookDto;
-import mate.academy.bookstore.dto.BookSearchParametersDto;
-import mate.academy.bookstore.dto.CreateBookRequestDto;
+import mate.academy.bookstore.dto.book.BookDto;
+import mate.academy.bookstore.dto.book.BookSearchParametersDto;
+import mate.academy.bookstore.dto.book.CreateBookRequestDto;
 import mate.academy.bookstore.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,7 +71,8 @@ public class BookController {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/search")
     @Operation(summary = "Search books", description = "Search for books via title, author, ISBN")
-    public List<BookDto> searchBooks(BookSearchParametersDto params) {
-        return bookService.searchBooks(params);
+    public Page<BookDto> searchBooks(BookSearchParametersDto params,
+                                     Pageable pageable) {
+        return bookService.searchBooks(params, pageable);
     }
 }

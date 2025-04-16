@@ -3,18 +3,20 @@ package mate.academy.bookstore.mapper;
 import java.util.Set;
 import java.util.stream.Collectors;
 import mate.academy.bookstore.config.MapperConfig;
-import mate.academy.bookstore.dto.BookDto;
-import mate.academy.bookstore.dto.BookDtoWithoutCategoryIds;
-import mate.academy.bookstore.dto.CreateBookRequestDto;
+import mate.academy.bookstore.dto.book.BookDto;
+import mate.academy.bookstore.dto.book.BookDtoWithoutCategoryIds;
+import mate.academy.bookstore.dto.book.CreateBookRequestDto;
 import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.model.Category;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
+
     @Mapping(target = "categoryIds", ignore = true)
     BookDto toDto(Book book);
 
@@ -47,5 +49,12 @@ public interface BookMapper {
                     .collect(Collectors.toSet());
             book.setCategories(categories);
         }
+    }
+
+    @Named("bookFromId")
+    default Book bookFromId(Long id) {
+        Book book = new Book();
+        book.setId(id);
+        return book;
     }
 }

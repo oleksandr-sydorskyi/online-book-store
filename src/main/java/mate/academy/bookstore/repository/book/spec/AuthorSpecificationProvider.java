@@ -1,6 +1,5 @@
 package mate.academy.bookstore.repository.book.spec;
 
-import java.util.Arrays;
 import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.repository.SpecificationProvider;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,8 +14,9 @@ public class AuthorSpecificationProvider implements SpecificationProvider<Book> 
         return AUTHOR;
     }
 
-    public Specification<Book> getSpecification(String[] params) {
-        return (root, query, criteriaBuilder) -> root.get(AUTHOR)
-                .in(Arrays.stream(params).toArray());
+    public Specification<Book> getSpecification(String param) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.like(criteriaBuilder.lower(root.get(AUTHOR)),
+                        "%" + param.toLowerCase() + "%");
     }
 }
